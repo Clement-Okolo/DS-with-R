@@ -2,7 +2,7 @@
 
 Outline
 
-1. Linear Regression - Simple regression, multiple regression, polynomials Interactions
+1. Linear Regression - Simple regression, multiple regression, polynomials, Interactions
 
 2. Classification -
 
