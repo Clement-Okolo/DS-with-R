@@ -1,0 +1,56 @@
+---
+title: "Linear Discriminant Analysis (LDA)"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+require(ISLR) # load package
+require(MASS) # load package
+```
+
+```{r}
+head(Smarket) # stock market data set
+```
+Use stock market data to show the Direction the market took on a particular day. The response is going to be the direction the market took on a particular day. And we'll use the returns before 2005 (train set) to try and predict the direction in 2005 (test set).
+
+```{r}
+lda.fit = lda(Direction~Lag1+Lag2, Smarket, subset=Year<2005)
+```
+
+
+```{r}
+lda.fit
+```
+The probabilities of groups show that the market is volatile. More precisely, about 50% of the time the marker is up (.51) and down(.49).
+
+The command below plots the linear discriminant function separately for the Up group and the down group.
+
+```{r}
+plot(lda.fit)
+```
+
+Predict stock market in year 2005 (aka test set).
+```{r}
+Smarket.2005 = subset(Smarket, Year==2005) # Create a new data frame for year 2005
+```
+```{r}
+Smarket.2005
+```
+
+```{r}
+lda.pred = predict(lda.fit, Smarket.2005)
+```
+
+```{r}
+data.frame(lda.pred)[1:5,]
+```
+```{r}
+table(lda.pred$class, Smarket.2005$Direction)
+```
+
+```{r}
+mean(lda.pred$class== Smarket.2005$Direction)
+```
+This means our prediction is 55% accurate
